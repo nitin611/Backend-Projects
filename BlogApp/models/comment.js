@@ -1,16 +1,20 @@
-const mongoose=require("mongoose");
+const mongoose = require('mongoose');
 
-// kon se post pe comment kiya hai -
-const CommentSchema=new mongoose.connect({
-    post:{
-        type:mongoose.Schema.Types.ObjectId,
-        ref:"posts"
+const commentSchema = new mongoose.Schema({
+    post: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'post',
+        required: true, 
     },
-    body:{
+    user: {
         type:String,
-        require:true
-    }
-},{ timestamps: true });
+        required:true
+    },
+    body: {
+        type: String,
+        required: true, 
+    },
+}, { timestamps: true });
 
-const Comment=mongoose.model("comment",CommentSchema);
-module.exports=Comment;
+const Comment = mongoose.model('comment', commentSchema);
+module.exports = Comment;

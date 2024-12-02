@@ -1,15 +1,36 @@
-const {comment}=require('../models/comment')
-const like=require('../models/like');
-const post=require('../models/post');
+const Comment=require('../models/comment')
+const Like=require('../models/like');
+const Post = require('../models/post');
 
-export const createComment=async(req,res)=>{
+
+exports.createComment=async(req,res)=>{
     try {
-         const {body}=req.body;
-         const comment=await comment.create({body});
+        // fetch data from body-
+         const {post,user,body}=req.body;
+        //  1st method of creation post inside db
+        //  const comment=await comment.create({post,user,body});
+
+        // 2nd method of creating post inside db-
+        const comment=new Comment({
+            post,user,body
+        })
+
+        const savedComment=await comment.save();
+        // find the post by id and update the comment with that id-
+        // jo post hai uske andar user ne comment kiya to pehle uss post ko search karo and then uske
+        // andar new comment add kardo-
+
+        // new true means updated post return karna-
+        // populate se -jo bhi actual document hai ush id se related usko fetch karsakte hai using
+        // populate -se actual comment and data aate hai aise sirf id
+        const updatedPost=await Post.findByIdAndUpdate(post,{$push:{comments:savedComment._id}},{new:true}).populate("comments").exec()
+
+
          res.status(200).send({
+            post:updatedPost,
             success:true,
             msg:"Comment created successfully",
-            data:comment
+            
          })
     } catch (err) {
         console.log(err)
@@ -21,9 +42,18 @@ export const createComment=async(req,res)=>{
 }
 
 // post creation-
-export const createPost=async(req,res)=>{
+exports.createPost=async(req,res)=>{
     try {
-        
+        const {title,body}=req.body;
+        const post=new Post({
+            title,body
+        });
+        const savedPost=await post.save();
+        res.status(200).send({
+            success:true,
+            post:savedPost
+        })
+
     } catch (error) {
         console.log(error)
         res.status(500).send({
@@ -34,9 +64,14 @@ export const createPost=async(req,res)=>{
 }
 
 // get all posts-
-export const getAllPosts=async(req,res)=>{
+exports.getAllPosts=async(req,res)=>{
     try {
-        
+        // without populate bash id aayega with populate comments,likes ka data bhi aayega-
+        const post=await Post.find().populate("comments").populate("likes").exec();
+        res.status(200).send({
+            success:true,
+            post
+        })
     } catch (err) {
         console.log(err)
         res.status(500).send({
@@ -47,9 +82,22 @@ export const getAllPosts=async(req,res)=>{
 }
 
 // like the posts-
-export const likePost=async(req,res)=>{
+// like ke andar postid,userka naam ye do cheeze hongi
+exports.likePost=async(req,res)=>{
     try {
-        
+        const {post,user}=req.body;
+        const like=new Like({post,user});
+        const savedLike=await like.save();
+
+        // update the post collection based on this similar to comment -
+        // when we like this post update the like inside this post-
+        const updatedPost=await Post.findByIdAndUpdate(post,{$push:{likes:savedLike._id}},{new:true}).populate("likes");
+        res.status(200).send({
+            success:true,
+            msg:"Post like successfully",
+            Post:updatedPost
+        })
+       
     } catch (err) {
         console.log(err)
         res.status(500).send({
@@ -60,7 +108,7 @@ export const likePost=async(req,res)=>{
 }
 
 // unlike all posts-
-export const unlikePost=async(req,res)=>{
+exports.unlikePost=async(req,res)=>{
     try {
         
     } catch (err) {
@@ -71,3 +119,4 @@ export const unlikePost=async(req,res)=>{
         });
     }
 }
+

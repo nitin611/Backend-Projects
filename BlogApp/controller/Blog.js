@@ -108,9 +108,27 @@ exports.likePost=async(req,res)=>{
 }
 
 // unlike all posts-
+//same post ko multiple log like kar sakte hai so - only delte on the basis of like id.
+// or can do post,like id dono ke basis pe dono id ke basis pe
 exports.unlikePost=async(req,res)=>{
     try {
         
+        const {post,like}=req.body;
+        // jish bhi pehli entry ke andar ye dono parameter mil jayegi to usko delete kardo-
+        // case - 1 findby id and delete se directly ho sakta hai-
+        
+        // case -2 - dono id se find karo and delete karo usko-
+        const deletedLike=await Like.findOneAndDelete({post:post,_id:like});
+        
+        // now update the post collection jaise pehle kiya tha-
+        const updatedPost=await Post.findByIdAndDelete(post,{$pull:{likes:deletedLike._id}},{new:true})
+        res.status(200).send({
+            success:true,
+            post:updatedPost,
+            msg:"Post is unliked successfully"
+        })
+
+
     } catch (err) {
         console.log(err)
         res.status(500).send({

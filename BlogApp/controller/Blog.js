@@ -110,7 +110,7 @@ exports.likePost=async(req,res)=>{
 // unlike all posts-
 //same post ko multiple log like kar sakte hai so - only delte on the basis of like id.
 // or can do post,like id dono ke basis pe dono id ke basis pe
-exports.unlikePost=async(req,res)=>{
+exports. sunlikePost=async(req,res)=>{
     try {
         
         const {post,like}=req.body;

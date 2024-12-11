@@ -5,7 +5,11 @@ exports.createTodo=async(req,res)=>{
 
     try {
         const {title,description}=req.body;
-        const todo=await Todo.create({title,description})
+        if(!age>30){
+            return res.stat
+        }
+       
+        const todo=await Todo.create({title,description});
         
 
         res.status(200).send({

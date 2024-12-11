@@ -7,6 +7,7 @@ exports.createComment=async(req,res)=>{
     try {
         // fetch data from body-
          const {post,user,body}=req.body;
+        
         //  1st method of creation post inside db
         //  const comment=await comment.create({post,user,body});
 

@@ -9,8 +9,9 @@ dbConnection();
 
 // middlewares-
 app.use(express.json());
+
 // mount-
-app.use("/api/v1",blog)
+app.use("/api/v1",blog);
 
 
 const port=process.env.PORT || 8000;

@@ -91,7 +91,7 @@ exports.loginController=async(req,res)=>{
         const payload={
             email:userExist.email,
             id:userExist._id,
-            role:userExist._role,
+            role:userExist.Role,
         }
         // verify password and generate jwt token-
         if(await bcrypt.compare(password,userExist.password)){
@@ -116,7 +116,7 @@ exports.loginController=async(req,res)=>{
             //                         2.)cookie data , 3.) options
             const options={
                 // expire hoga cookie 3 days me-
-               expires:new Date(Date.now()+3*24*60*60*1000),
+                expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000), // 7 days
             //    client side me ni hoga 
                httpOnly:true
             }

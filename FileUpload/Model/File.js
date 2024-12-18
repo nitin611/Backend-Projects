@@ -18,5 +18,16 @@ const FileSchema=new mongoose.Schema(
         }
 },{timestamps:true});
 
+//----------------------------------------- POST MIDDLEWARE---------------------------------------------------------
+
+FileSchema.post("save",async function(doc){
+    try {
+        console.log('doc',doc)
+    } 
+    catch (err) {
+        console.error(err)
+    }
+})
+
 const file=mongoose.model('file',FileSchema);
 module.exports=file;

@@ -1,7 +1,7 @@
 const express=require("express")
 const app=express();
 const { connect } = require('./Config/db');
-const {cloudinary}=require('./Config/cloudinary')
+
 require("dotenv").config()
 
 // --------------------------Connect to the database---------------------
@@ -14,7 +14,7 @@ cloudinary()
 app.use(express.json());
 
 // --------------------------------file-upload middleware------------------
-
+const {cloudinary}=require('./Config/cloudinary')
 const fileUpload=require("express-fileupload")
 app.use(fileUpload({
     limits: { fileSize: 50 * 1024 * 1024 },

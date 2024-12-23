@@ -45,10 +45,14 @@ function isFileTypeSupported(type,supportedImage){
 }
 
 // function for uploading file on cloudinary-
- async function uploadFileToCloudinary(file,folder){
+ async function uploadFileToCloudinary(file,folder,quality){
     const options={folder}
     // by default file type ko detect karo-
+    if(quality){
+        options.quality=quality
+    }
     options.resource_type="auto"
+   
     return await cloudinary.uploader.upload(file.tempFilePath,options)
  }
 
@@ -163,7 +167,7 @@ exports.imageReducerUpload=async(req,res)=>{
 
         //------------------------ now upload on cloudinary------------------------------
           // yaha pe file ko reduce karo-
-        const response=await uploadFileToCloudinary(file,"FileUploadProject")
+        const response=await uploadFileToCloudinary(file,"FileUploadProject",90)
         console.log(response)
         // database me entry save karo-
         const fileData=await File.create({

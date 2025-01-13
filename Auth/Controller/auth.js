@@ -106,7 +106,7 @@ exports.loginController=async(req,res)=>{
             // send token in response of user-
     // -------1.)userExist is a Mongoose document fetched via user.findOne(). When you modify its properties (userExist.token and userExist.password), those changes are not saved to the database
 
-//           2.) Mongoose provides the toObject() method, which converts the document into a plain      JavaScript object. This allows modifications to be reflected in the response.
+//  2.) Mongoose provides the toObject() method, which converts the document into a plain      JavaScript object. This allows modifications to be reflected in the response.
             const userResponse = userExist.toObject();
             userResponse.token = token;
             userResponse.password = undefined;

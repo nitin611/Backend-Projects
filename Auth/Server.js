@@ -4,7 +4,7 @@ const dotenv=require('dotenv')
 const user=require("./Routes/User")
 
 const databaseConnection=require('./Config/db')
-const cookieParser = require("cookie-parser");
+const cookieParser = require("cookie-parser")
 dotenv.config()
 databaseConnection()
 

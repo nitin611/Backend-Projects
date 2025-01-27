@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chat App</title>
+  <link rel="stylesheet" href="styles.css">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+  <div class="chat-container">
+    <!-- Join Room Section -->
+    <div class="join-container" id="join-container">
+      <h2>Welcome to the Chat Room</h2>
+      <form id="join-form">
+        <input type="text" id="username" placeholder="Enter your name" required />
+        <button type="submit">Join</button>
+      </form>
+    </div>
+
+    <!-- Chat Room Section -->
+    <div class="chat-room hidden" id="chat-room">
+      <!-- Header -->
+      <div class="chat-header">
+        <h2>Chat Room</h2>
+        <i class="fas fa-comments"></i>
+      </div>
+
+      <!-- Messages Area -->
+      <div class="chat-messages" id="chat-messages"></div>
+
+      <!-- Message Input -->
+      <form id="chat-form" class="chat-form">
+        <input type="text" id="message" placeholder="Type a message..." autocomplete="off" required />
+        <button type="submit"><i class="fas fa-paper-plane"></i></button>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    // Basic script for toggling join/chat view
+    const joinForm = document.getElementById('join-form');
+    const chatRoom = document.getElementById('chat-room');
+    const joinContainer = document.getElementById('join-container');
+    const usernameInput = document.getElementById('username');
+    const chatForm = document.getElementById('chat-form');
+    const chatMessages = document.getElementById('chat-messages');
+
+    // Dummy join logic
+    joinForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      joinContainer.classList.add('hidden');
+      chatRoom.classList.remove('hidden');
+    });
+
+    // Example for adding messages
+    chatForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const message = document.getElementById('message').value;
+      const messageDiv = document.createElement('div');
+      messageDiv.classList.add('message', 'user-message');
+      messageDiv.innerHTML = `<span class="username">You:</span> ${message}`;
+      chatMessages.appendChild(messageDiv);
+      document.getElementById('message').value = '';
+      chatMessages.scrollTop = chatMessages.scrollHeight; // Auto scroll
+    });
+  </script>
+</body>
+</html>

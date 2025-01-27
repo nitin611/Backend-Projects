@@ -18,6 +18,7 @@ exports.signupContoller=async(req,res)=>{
                 msg: "All fields are required"
             });
         }
+
         // find if this user is already existed or not-
         // kya db me ish email se koi entry hai to 
         const existingUser=await user.findOne({email});
@@ -102,6 +103,7 @@ exports.loginController=async(req,res)=>{
                                 {
                                     expiresIn:"2h",
                                 });
+            
             
             // send token in response of user-
     // -------1.)userExist is a Mongoose document fetched via user.findOne(). When you modify its properties (userExist.token and userExist.password), those changes are not saved to the database

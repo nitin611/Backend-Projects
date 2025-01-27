@@ -7,10 +7,10 @@ exports.auth=(req,res,next)=>{
     try {
         // extract jwt token-
         // using -------------------------body extract token-
-        // const token=req.header("Authorisation").replace("Bearer","")
+        const token=req.header("Authorisation").replace("Bearer","")
         // or token ko -----------------cookie se bhi nikal sakte aise-
-        const token=req.cookies.token
-        console.log("Cookies:", req.cookies);
+        // const token=req.cookies.token
+        // console.log("Cookies:", req.cookies);
 
 
         // using header extract token-
